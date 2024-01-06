@@ -4,6 +4,8 @@ Streamlit LLM Chat App on AWS
 
 ## reserve
 
+### create a user pool
+
 create a Cognito user pool and a user pool client.
 
 ```bash
@@ -44,6 +46,14 @@ $ aws cognito-idp describe-user-pool-client --user-pool-id <userPoolId> --client
 Replace `userPoolId` with the user pool ID and `AppClientId` with the app client ID.
 That is the client secret.
 
+### create a user
+
+* Run the `aws cognito-idp admin-create-user` command with the following parameters:
+  * –user-pool-id: The ID of the user pool that you want to add a user to.
+  * –username: The user name for the user.
+  * –user-attributes: The user attributes for the user, such as email, phone number, name, etc. You can specify multiple attributes by using the syntax Name=value,Name=value,…
+  * –message-action: The option to send a verification email or SMS message to the user. You can choose SUPPRESS to suppress the message, or RESEND to resend the message if the user already exists.
+
 ### environment setting
 
 Write the OpenAPI access key, the model to be used, the user pool ID you just created, the app client ID, and the client secret in the `.env` file.
@@ -70,6 +80,4 @@ docker build ./ -t streamlit-app
 ```bash
 docker compose up -d
 ```
-
-## deploy on AWS
 
