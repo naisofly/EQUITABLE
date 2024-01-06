@@ -1,0 +1,14 @@
+version: '3'
+services:
+  streamlit:
+    image: 'streamlit-app'
+    env_file:
+     - .env
+    ports:          
+      - 8501:8501
+    environment:
+     - OPENAI_API_KEY
+     - OPENAI_MODEL
+     - POOL_ID
+     - APP_CLIENT_ID
+     - APP_CLIENT_SECRET
