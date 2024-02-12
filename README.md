@@ -2,6 +2,8 @@
 
 Streamlit LLM Chat App on AWS
 
+![screen_shot](./image/screen_shot_1.gif)
+
 ## reserve
 
 ### create a user pool
@@ -81,3 +83,14 @@ docker build ./ -t streamlit-app
 docker compose up -d
 ```
 
+## deploy on AWS
+
+### create a repository in ECR 
+
+```bash
+aws ecr create-repository --repository-name streamlit-app --region us-east-1
+```
+
+```bash
+aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin xxxxxxxx.dkr.ecr.us-east-1.amazonaws.com/streamlit-app
+```
