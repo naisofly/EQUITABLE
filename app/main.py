@@ -1,38 +1,18 @@
 import os
-from openai import OpenAI
+
+import anthropic
 import streamlit as st
-from streamlit_cognito_auth import CognitoAuthenticator
 
-pool_id = os.environ.get("POOL_ID")
-app_client_id = os.environ.get("APP_CLIENT_ID")
-app_client_secret = os.environ.get("APP_CLIENT_SECRET")
-openai_model = os.environ.get("OPENAI_MODEL")
+ai_model = os.environ.get("AI_MODEL")
+api_key = os.environ.get("API_KEY")
 
-authenticator = CognitoAuthenticator(
-    pool_id=pool_id,
-    app_client_id=app_client_id,
-    app_client_secret=app_client_secret,
+st.title("Craude 3 by Streamlit")
+
+client = anthropic.Anthropic(
+    api_key=api_key,
 )
-
-is_logged_in = authenticator.login()
-if not is_logged_in:
-    st.stop()
-
-
-def logout():
-    authenticator.logout()
-
-
-with st.sidebar:
-    st.text(f"Welcome,\n{authenticator.get_username()}")
-    st.button("Logout", "logout_btn", on_click=logout)
-
-st.title("ChatGPT by Streamlit")
-
-client = OpenAI()
-
 if "openai_model" not in st.session_state:
-    st.session_state["openai_model"] = openai_model
+    st.session_state["ai_model"] = ai_model
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
@@ -49,19 +29,26 @@ if prompt := st.chat_input("What is up?"):
     with st.chat_message("assistant"):
         message_placeholder = st.empty()
         full_response = ""
-        stream = client.chat.completions.create(
-            model=st.session_state["openai_model"],
-            messages=[
-                {"role": m["role"], "content": m["content"]}
-                for m in st.session_state.messages
-            ],
+        stream = client.messages.create(
+            max_tokens=1024,
+            messages=[{"role": m["role"], "content": m["content"]} for m in st.session_state.messages],
+            model=st.session_state["ai_model"],
             stream=True,
         )
-        for chunk in stream:
-            if not chunk.choices:
-                continue
-            response = chunk.choices[0].delta.content
-            full_response += str(response) if response is not None else ''
-            message_placeholder.markdown(full_response + "▌")
+        if stream:
+            for event in stream:
+                response = ""
+                match event.type:
+                    case "message_start":
+                        input_tokens = event.message.usage.input_tokens
+                    case "content_block_start":
+                        response = event.content_block.text
+                    case "content_block_delta":
+                        response = event.delta.text
+                    case "message_delta":
+                        output_tokens = event.usage.output_tokens
+
+                full_response += str(response) if response is not None else ""
+                message_placeholder.markdown(full_response + "▌")
         message_placeholder.markdown(full_response)
     st.session_state.messages.append({"role": "assistant", "content": full_response})

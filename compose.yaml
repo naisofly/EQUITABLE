@@ -1,7 +1,7 @@
 version: '3'
 services:
   streamlit:
-    image: 'streamlit-app'
+    image: 'streamlit-claude-chat'
     env_file:
      - .env
     ports:          
@@ -9,6 +9,3 @@ services:
     environment:
      - OPENAI_API_KEY
      - OPENAI_MODEL
-     - POOL_ID
-     - APP_CLIENT_ID
-     - APP_CLIENT_SECRET
