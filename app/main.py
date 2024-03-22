@@ -6,7 +6,7 @@ import streamlit as st
 ai_model = os.environ.get("AI_MODEL")
 api_key = os.environ.get("API_KEY")
 
-st.title("Craude 3 by Streamlit")
+st.title("Claude 3 by Streamlit")
 
 client = anthropic.Anthropic(
     api_key=api_key,
