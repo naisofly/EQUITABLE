@@ -6,7 +6,7 @@ st.title("EQUITABLE")
 st.caption("Empowering women to claim an equal seat at the table by mirroring gendered dynamics in the real world.")
 
 ai_model = "claude-3-5-sonnet-20241022"
-api_key = "ADD-API-KEY-HERE"
+api_key = "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"
 
 client = anthropic.Anthropic(
     api_key=api_key,
