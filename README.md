@@ -1,36 +1,28 @@
-# streamlit-claude-chat
+# 👩‍💼EQUITABLE
 
-Streamlit LLM Chat App by anthropic claude
+Empowering women to claim an equal seat at the table by mirroring gendered dynamics in the real world.
 
-![screen_shot](./image/screen_shot_1.gif)
+![image](https://github.com/user-attachments/assets/f0fa11a2-6acc-487f-8258-26bfba9b4006)
+
 
 ## git clone
 
 ```
-git clone https://github.com/festiva1300/streamlit-claude-chat.git
-cd streamlit-claude-chat
+git clone https://github.com/naisofly/EQUITABLE.git
+cd EQUITABLE
 ```
 
 ## environment setting
 
-Write the Anthripic access key, the model to be used in the `.env` file.
+Write the Anthropic access key, the model in the `.env` file.
 
 ```
 API_KEY=XX-XXXXX...
 AI_MODEL=claude-3-sonnet-20240229
 ```
 
-## execute
+## run in terminal
 
-### build a container
-
-```bash
-docker build ./ -t streamlit-claude-chat
 ```
-
-### deploy on local
-
-```bash
-docker compose up -d
+streamlit run .\app\main.py
 ```
-
