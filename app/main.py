@@ -1,5 +1,7 @@
 import anthropic
 import streamlit as st
+from google.cloud import speech
+import io
 
 # Set up the Streamlit page title and caption
 st.title("EQUITABLE")
@@ -18,10 +20,24 @@ that both beginners and experienced leaders can benefit from tailored, practical
 # Initialize the Anthropic client
 client = anthropic.Anthropic(api_key=API_KEY)
 
+# Initialize Google Speech client
+speech_client = speech.SpeechClient()
+
 # Function to generate AI response
 def generate_response(messages):
     with client.messages.stream(max_tokens=1024, system=SYSTEM_PROMPT, messages=messages, model=AI_MODEL) as stream:
         return "".join([str(text) if text is not None else "" for text in stream.text_stream])
+
+# Function to transcribe audio
+def transcribe_audio(audio_bytes):
+    audio = speech.RecognitionAudio(content=audio_bytes)
+    config = speech.RecognitionConfig(
+        encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
+        language_code="en-US",
+    )
+    response = speech_client.recognize(config=config, audio=audio)
+    print(response.results)
+    return response.results[0].alternatives[0].transcript if response.results else ""
 
 # Initialize the chat history if it doesn't exist
 if "messages" not in st.session_state:
@@ -47,22 +63,33 @@ if "messages" not in st.session_state:
     # Generate and add AI's response to the initial prompt
     st.session_state.messages.append({"role": "assistant", "content": generate_response([{"role": "user", "content": initial_prompt}])})
 
-# Display the chat history, starting after the first user prompt
+# Display the chat history
 for message in st.session_state.messages[1:]:
     with st.chat_message(message["role"]):
         st.markdown(message["content"])
 
-# Handle user input
-if prompt := st.chat_input("What is up?"):
-    # Add user's new message to the chat history
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
+# Create placeholders for user input and AI response
+user_message_placeholder = st.empty()
+ai_response_placeholder = st.empty()
 
-    # Generate and display AI's response
-    with st.chat_message("assistant"):
-        full_response = generate_response([{"role": m["role"], "content": m["content"]} for m in st.session_state.messages])
-        st.markdown(full_response)
-    
-    # Add AI's response to the chat history
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
+# Always display the audio input widget
+audio_input = st.experimental_audio_input("Say something")
+
+if audio_input is not None:
+    # Transcribe audio to text
+    audio_bytes = audio_input.read()
+    transcribed_text = transcribe_audio(audio_bytes)
+
+    if transcribed_text:
+        # Add user's transcribed message to the chat history
+        st.session_state.messages.append({"role": "user", "content": transcribed_text})
+        with user_message_placeholder.chat_message("user"):
+            st.markdown(transcribed_text)
+
+        # Generate and display AI's response
+        with ai_response_placeholder.chat_message("assistant"):
+            full_response = generate_response([{"role": m["role"], "content": m["content"]} for m in st.session_state.messages])
+            st.markdown(full_response)
+        
+        # Add AI's response to the chat history
+        st.session_state.messages.append({"role": "assistant", "content": full_response})
