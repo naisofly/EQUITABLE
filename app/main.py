@@ -1,7 +1,7 @@
 import anthropic
 import streamlit as st
 from google.cloud import speech
-import io
+from typing import List
 
 # Set up the Streamlit page title and caption
 st.title("EQUITABLE")
@@ -28,16 +28,36 @@ def generate_response(messages):
     with client.messages.stream(max_tokens=1024, system=SYSTEM_PROMPT, messages=messages, model=AI_MODEL) as stream:
         return "".join([str(text) if text is not None else "" for text in stream.text_stream])
 
-# Function to transcribe audio
-def transcribe_audio(audio_bytes):
+# Function to Transcribe audio using Google Speech-to-Text API and format the results.
+def transcribe_audio(audio_bytes: bytes) -> str:
+
+    # Initialize the speech client
+    speech_client = speech.SpeechClient()
+
+    # Create the RecognitionAudio object
     audio = speech.RecognitionAudio(content=audio_bytes)
+
+    # Configure the recognition settings
     config = speech.RecognitionConfig(
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         language_code="en-US",
+        enable_automatic_punctuation=True,  # Add punctuation for better formatting
     )
+
+    # Perform the transcription
     response = speech_client.recognize(config=config, audio=audio)
-    print(response.results)
-    return response.results[0].alternatives[0].transcript if response.results else ""
+
+    # Process and format the results
+    formatted_transcripts: List[str] = []
+    for result in response.results:
+        if result.alternatives:
+            # Get the transcript with the highest confidence
+            transcript = result.alternatives[0].transcript.strip()
+            if transcript:
+                formatted_transcripts.append(transcript)
+
+    # Join the formatted transcripts with line breaks
+    return "\n".join(formatted_transcripts)
 
 # Initialize the chat history if it doesn't exist
 if "messages" not in st.session_state:
