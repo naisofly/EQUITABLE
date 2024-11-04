@@ -134,7 +134,7 @@ sniffio==1.3.0
     #   anthropic
     #   anyio
     #   httpx
-streamlit==1.29.0
+streamlit==1.39.0
     # via -r requirements.in
 tenacity==8.2.3
     # via streamlit
