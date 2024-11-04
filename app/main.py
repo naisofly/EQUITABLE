@@ -66,7 +66,7 @@ if "messages" not in st.session_state:
     # Add the initial prompt
     initial_prompt = """I'm a woman and I need to roleplay a benefits negotiation scenario.
 
-        My goal is to convince my manager to invest in me attending a training next month in my city
+        My goal is to approve my leave request.
 
         My manager is neutral/professional.
 
