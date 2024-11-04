@@ -7,6 +7,8 @@ from typing import List, Dict
 st.title("EQUITABLE")
 st.caption("Empowering women to claim an equal seat at the table by mirroring gendered dynamics in the real world.")
 
+#st.sidebar.image("logo.png", use_column_width=True) $can add once we finalize the logo
+
 # Define constants
 AI_MODEL = "claude-3-5-sonnet-20241022"
 API_KEY = "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"
@@ -20,46 +22,76 @@ that both beginners and experienced leaders can benefit from tailored, practical
 # Initialize the Anthropic client
 client = anthropic.Anthropic(api_key=API_KEY)
 
-manager_personality = st.selectbox(
-    "Choose your manager's personality:",
-    ["Neutral", "Rigid", "Supportive"]
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebar"] {
+        background-color: #9370db; 
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
 )
+
+manager_personality = st.sidebar.radio(
+    "Choose your Manager's Personality:",
+    ["Select a Personality","Neutral", "Rigid", "Supportive"]
+)
+
+# Function to change background color based on the selected manager personality
+def set_background_color(personality):
+    color_map = {
+        "Neutral": "#D3D3D3",  # Light gray
+        "Rigid": "#FFCCCC",    # Light red
+        "Supportive": "#CCFFCC" # Light green
+    }
+    if personality in color_map:
+        color = color_map[personality]
+        st.markdown(
+            f"""
+            <style>
+            .stApp {{
+                background-color: {color};
+            }}
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
+
+# Set the background color based on the selected personality
+if manager_personality != "Select a Personality":
+    set_background_color(manager_personality)
+
+scenario_keyword=st.sidebar.text_input("Enter a keyword for the scenario (e.g. 'leave request')")
+
+goal=st.sidebar.text_input("what is the goal of the conversation?")
 
 # Function to generate AI response
 def generate_response(messages):
     with client.messages.stream(max_tokens=1024, system="", messages=messages, model=AI_MODEL) as stream:
         return "".join([str(text) if text is not None else "" for text in stream.text_stream])
 
-# Function to parse and display feedback with progress bars
+
 def display_feedback(feedback: str):
     # Define the metrics we are looking for
     metrics = ["Effectiveness", "Preparedness", "Assertiveness", "Confidence", "Flexibility"]
     feedback_lines = feedback.splitlines()
     scores: Dict[str, int] = {}
 
-    # Parse feedback to extract scores
-    for line in feedback_lines:
-        for metric in metrics:
-            if metric in line:
-                try:
-                    # Extract the score (e.g., "Effectiveness: 8/10" -> score 8)
-                    score = int(line.split(":")[1].split("/")[0].strip())
-                    scores[metric] = score
-                except (IndexError, ValueError):
-                    continue
-
-    # Display colorful progress bars for each metric
+    # trying to display colorful progress bars for each metric here/not completely done
     for metric, score in scores.items():
         st.markdown(f"**{metric}:**")
         st.progress(score / 10)  # Normalize to 0-1 scale for the progress bar
 
 
 # Initialize the chat history if it doesn't exist
-if "messages" not in st.session_state:
+if "messages" not in st.session_state and manager_personality != "Select a Personality":
     st.session_state.messages = []
     initial_prompt = f"""I'm a woman and I need to roleplay a benefits negotiation scenario.
 
-    My goal is to approve my leave request.
+    My scanario is {scenario_keyword}
+
+    My goal is to {goal}
 
     My manager is {manager_personality.lower()}.
 
