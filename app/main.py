@@ -58,7 +58,7 @@ def generate_and_play_audio(text):
     if text:  # Only generate and play audio if there's text to speak
         audio = eleven_labs.generate(
             text=text,
-            voice="Chris",
+            voice="Eric",
             model="eleven_multilingual_v2"
         )
         play(audio)

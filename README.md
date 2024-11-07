@@ -32,7 +32,7 @@ git clone https://github.com/naisofly/EQUITABLE.git
 cd EQUITABLE
 ```
 
-2. Install required packages:
+2. Install required packages & [FFmpeg](https://ffmpeg.org/download.html) for Audio Playback 
 ```
 pip install -r requirements.txt
 ```
