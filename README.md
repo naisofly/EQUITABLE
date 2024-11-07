@@ -6,22 +6,23 @@ EQUITABLE empowers women to claim an equal seat at the table by simulating real-
 
 ## Impact & Relevance
 
-- Addresses the significant need for women's empowerment in negotiation and leadership roles
-- Aligns with UN SDG 5 (Gender Equality) by promoting economic empowerment for women
-- Potential to reduce the gender pay gap and increase women's representation in leadership positions
+- Addresses the significant need for women's empowerment in negotiation and leadership roles.
+- Aligns with UN SDG 5 (Gender Equality) by promoting economic empowerment for women.
+- Potential to reduce the gender pay gap and increase women's representation in leadership positions.
 
 ## Innovation & Creativity
 
-- Leverages AI to create realistic, adaptive negotiation scenarios
-- Provides personalized feedback and strategic approaches tailored to each user's skill level
-- Combines speech recognition and natural language processing for an immersive experience
+- Leverages AI to create realistic, adaptive negotiation scenarios.
+- Provides personalized feedback and strategic approaches tailored to each user's skill level.
+- Combines speech recognition and natural language processing for an immersive experience.
 
 ## Functionality & Usability
 
-- User-friendly interface built with Streamlit
-- Voice input for natural conversation flow
-- Real-time AI responses and feedback
-- Adapts to user's skill level for continuous improvement
+- User-friendly interface built with Streamlit.
+- Voice input for natural conversation flow using Google Cloud Speech-to-Text.
+- Real-time AI responses and feedback.
+- Integrates ElevenLabs Text-to-Speech to provide audio playback of manager responses.
+- Adapts to user's skill level for continuous improvement.
 
 ## Setup Guide
 

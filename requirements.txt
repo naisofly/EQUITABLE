@@ -33,6 +33,7 @@ click==8.1.7
     # via streamlit
 distro==1.9.0
     # via anthropic
+elevenlabs==1.12.1
 exceptiongroup==1.2.0
     # via anyio
 filelock==3.13.1
