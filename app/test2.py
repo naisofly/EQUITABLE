@@ -1,13 +1,17 @@
 import anthropic
 import streamlit as st
-from google.cloud import speech
-from typing import List, Dict
+import time
+from typing import List
+
+# Path to the logo image
+logo_path = r"C:\Users\tejas\EQUITABLE\image\logo.png"
+
+# Display logo 
+st.logo(logo_path, size="large")
 
 # Set up the Streamlit page title and caption
 st.title("EQUITABLE")
 st.caption("Empowering women to claim an equal seat at the table by mirroring gendered dynamics in the real world.")
-
-#st.sidebar.image("logo.png", use_column_width=True) $can add once we finalize the logo
 
 # Define constants
 AI_MODEL = "claude-3-5-sonnet-20241022"
@@ -22,118 +26,99 @@ that both beginners and experienced leaders can benefit from tailored, practical
 # Initialize the Anthropic client
 client = anthropic.Anthropic(api_key=API_KEY)
 
-st.markdown(
-    """
-    <style>
-    [data-testid="stSidebar"] {
-        background-color: #9370db; 
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# Initialize session state for messages if not already done
+if "messages" not in st.session_state:
+    st.session_state.messages = []
 
-manager_personality = st.sidebar.radio(
-    "Choose your Manager's Personality:",
-    ["Select a Personality","Neutral", "Rigid", "Supportive"]
-)
+# Sidebar inputs for user configuration
+manager_personality = st.selectbox("Select your manager's personality:", ["Select...", "Supportive", "Neutral", "Rigid"])
+benefit_scenario = st.text_input("Describe the benefit scenario:")
+goal = st.text_input("What is your goal?")
 
-# Function to change background color based on the selected manager personality
-def set_background_color(personality):
-    color_map = {
-        "Neutral": "#D3D3D3",  # Light gray
-        "Rigid": "#FFCCCC",    # Light red
-        "Supportive": "#CCFFCC" # Light green
-    }
-    if personality in color_map:
-        color = color_map[personality]
-        st.markdown(
-            f"""
-            <style>
-            .stApp {{
-                background-color: {color};
-            }}
-            </style>
-            """,
-            unsafe_allow_html=True
-        )
-
-# Set the background color based on the selected personality
-if manager_personality != "Select a Personality":
-    set_background_color(manager_personality)
-
-scenario_keyword=st.sidebar.text_input("Enter a keyword for the scenario (e.g. 'leave request')")
-
-goal=st.sidebar.text_input("what is the goal of the conversation?")
+# Add the "Let's Roleplay" button
+start_roleplay = st.button("Let's Roleplay")
 
 # Function to generate AI response
-def generate_response(messages):
-    with client.messages.stream(max_tokens=1024, system="", messages=messages, model=AI_MODEL) as stream:
+def generate_response(messages, include_feedback=False):
+    system_prompt = SYSTEM_PROMPT
+    # Modify the prompt to exclude feedback unless explicitly requested
+    if not include_feedback:
+        system_prompt += "\nNOTE: Do not generate feedback unless explicitly prompted."
+
+    with client.messages.stream(max_tokens=1024, system=system_prompt, messages=messages, model=AI_MODEL) as stream:
         return "".join([str(text) if text is not None else "" for text in stream.text_stream])
 
+# Start roleplay only when the button is clicked
+if start_roleplay:
+    # Initialize the chat history if not done already
+    if not st.session_state.messages:
+        initial_prompt = f"""I'm a woman and I need to roleplay a benefits negotiation scenario.
 
-def display_feedback(feedback: str):
-    # Define the metrics we are looking for
-    metrics = ["Effectiveness", "Preparedness", "Assertiveness", "Confidence", "Flexibility"]
-    feedback_lines = feedback.splitlines()
-    scores: Dict[str, int] = {}
+        My manager is {manager_personality.lower()}.
+        My scenario: {benefit_scenario.lower()}
+        My goal is to {goal.lower()}.
 
-    # trying to display colorful progress bars for each metric here/not completely done
-    for metric, score in scores.items():
-        st.markdown(f"**{metric}:**")
-        st.progress(score / 10)  # Normalize to 0-1 scale for the progress bar
+        After the roleplay scenario, I want a Feedback Summary with highlights and actionable next steps after the conversation using a 10-point scale for the below metrics:
+        * Effectiveness (Did you meet your goal?)
+        * Preparedness (Have you done your research?)
+        * Assertiveness
+        * Confidence
+        * Flexibility (Can you reach a reasonable compromise or a middle ground?)"""
 
+        # Add user's initial prompt to the chat history
+        st.session_state.messages.append({"role": "user", "content": initial_prompt})
+        response = generate_response([{"role": "user", "content": initial_prompt}])
+        st.session_state.messages.append({"role": "assistant", "content": response})
 
-# Initialize the chat history if it doesn't exist
-if "messages" not in st.session_state and manager_personality != "Select a Personality":
-    st.session_state.messages = []
-    initial_prompt = f"""I'm a woman and I need to roleplay a benefits negotiation scenario.
+# Display the chat history and input box only if the roleplay has started
+if st.session_state.messages:
+    # Display the chat history
+    for message in st.session_state.messages[1:]:
+        with st.chat_message(message["role"]):
+            st.markdown(message["content"])
 
-    My scanario is {scenario_keyword}
+    # Function to handle submission
+    def submit():
+        # Store the input in messages and clear the input field
+        st.session_state.messages.append({"role": "user", "content": st.session_state.user_input})
+        st.session_state.user_input = ""  # Clear the input after submission
 
-    My goal is to {goal}
+        # Generate AI's response
+        ai_response = generate_response([{"role": m["role"], "content": m["content"]} for m in st.session_state.messages])
+        st.session_state.messages.append({"role": "assistant", "content": ai_response})
 
-    My manager is {manager_personality.lower()}.
+    # Create a text input for user interaction with on_change callback
+    st.text_input("Enter your message here:", key="user_input", on_change=submit)
 
-    After the roleplay scenario, I want a Feedback Summary with highlights and actionable next steps using a 10-point scale for:
-    * Effectiveness (Did you meet your goal?)
-    * Preparedness (Have you done your research?)
-    * Assertiveness
-    * Confidence
-    * Flexibility (Can you reach a reasonable compromise or a middle ground?)"""
+    # Add "Generate Feedback" button
+    generate_feedback = st.button("Generate Feedback")
 
-    st.session_state.messages.append({"role": "user", "content": initial_prompt})
-    st.session_state.messages.append({"role": "assistant", "content": generate_response([{"role": "user", "content": initial_prompt}])})
+    if generate_feedback:
+        feedback_response = generate_response([{"role": m["role"], "content": m["content"]} for m in st.session_state.messages], include_feedback=True)
+        st.session_state.messages.append({"role": "assistant", "content": feedback_response})
 
-# Display the chat history
-for message in st.session_state.messages[1:]:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
+        # Display the feedback with progress bars
+        st.markdown("### Feedback Summary:")
+        progress_text = "Generating feedback scores. Please wait."
+        my_bar = st.progress(0, text=progress_text)
 
-# Create placeholders for user input and AI response
-user_message_placeholder = st.empty()
-ai_response_placeholder = st.empty()
+        # Simulate progress for loading
+        for percent_complete in range(100):
+            time.sleep(0.01)
+            my_bar.progress(percent_complete + 1, text=progress_text)
+        
+        # Parse and display scores in the feedback response
+        metrics = ["Effectiveness", "Preparedness", "Assertiveness", "Confidence", "Flexibility"]
+        for metric in metrics:
+            if metric in feedback_response:
+                try:
+                    # Extract the score (e.g., "Effectiveness: 8/10" -> 8)
+                    score = int(feedback_response.split(f"{metric}: ")[1].split("/")[0].strip())
+                    st.markdown(f"**{metric}:**")
+                    st.progress(score / 10)  # Normalize the score to a 0-1 scale for the progress bar
+                except (IndexError, ValueError):
+                    continue
 
-# Display a disabled audio input placeholder
-st.text_input("Audio input (currently disabled)", disabled=True)
-
-# Create a text input for user interaction
-user_input = st.text_input("Enter your message:")
-
-if user_input:
-    # Add user's message to the chat history
-    st.session_state.messages.append({"role": "user", "content": user_input})
-    with user_message_placeholder.chat_message("user"):
-        st.markdown(user_input)
-
-    # Generate and display AI's response
-    with ai_response_placeholder.chat_message("assistant"):
-        full_response = generate_response([{"role": m["role"], "content": m["content"]} for m in st.session_state.messages])
-        st.markdown(full_response)
-
-    # Add AI's response to the chat history
-    st.session_state.messages.append({"role": "assistant", "content": full_response})
-
-    # Display feedback with progress bars
-    if "Feedback Summary" in full_response:
-        display_feedback(full_response)
+        time.sleep(1)
+        my_bar.empty()
+        st.markdown(feedback_response)
