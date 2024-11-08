@@ -33,7 +33,7 @@ click==8.1.7
     # via streamlit
 distro==1.9.0
     # via anthropic
-elevenlabs==1.12.1
+elevenlabs
 exceptiongroup==1.2.0
     # via anyio
 filelock==3.13.1
@@ -96,9 +96,9 @@ protobuf==4.25.1
     # via streamlit
 pyarrow==14.0.2
     # via streamlit
-pydantic==2.5.3
+pydantic
     # via anthropic
-pydantic-core==2.18.2
+pydantic-core
     # via pydantic
 pydeck==0.8.1b0
     # via streamlit

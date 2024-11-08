@@ -7,7 +7,7 @@ from elevenlabs.client import ElevenLabs
 import re
 
 # Path to the logo image
-logo_path = r"C:\Users\tejas\EQUITABLE\image\logo.png"
+logo_path = r"Logo.jpg"
 st.logo(logo_path,size="large")
 
 # Set up the Streamlit page title and caption
