@@ -60,7 +60,7 @@ def generate_and_play_audio(text):
         audio = eleven_labs.generate(
             text=text,
             voice="Eric",
-            model="eleven_multilingual_v2"
+            model="eleven_turbo_v2_5"
         )
         play(audio)
 
