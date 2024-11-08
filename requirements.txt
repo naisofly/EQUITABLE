@@ -98,7 +98,7 @@ pyarrow==14.0.2
     # via streamlit
 pydantic==2.5.3
     # via anthropic
-pydantic-core==2.14.6
+pydantic-core==2.18.2
     # via pydantic
 pydeck==0.8.1b0
     # via streamlit
