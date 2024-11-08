@@ -4,7 +4,7 @@ import time
 from typing import List
 
 # Path to the logo image
-logo_path = r"C:\Users\tejas\EQUITABLE\image\logo.png"
+logo_path = r"image\logo.png"
 
 # Display logo 
 st.logo(logo_path, size="large")

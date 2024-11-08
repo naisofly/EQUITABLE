@@ -42,6 +42,7 @@ def transcribe_audio(audio_bytes: bytes) -> str:
         encoding=speech.RecognitionConfig.AudioEncoding.LINEAR16,
         language_code="en-US",
         enable_automatic_punctuation=True,
+        model="phone_call",  # Optimized for phone call audio
     )
     response = speech_client.recognize(config=config, audio=audio)
     formatted_transcripts = [result.alternatives[0].transcript.strip() for result in response.results if result.alternatives]
