@@ -30,12 +30,14 @@ speech_client = speech.SpeechClient()
 # Initialize ElevenLabs client
 eleven_labs = ElevenLabs(api_key=ELEVENLABS_API_KEY)
 
-# Function to generate AI response
+# Function to generate AI response with caching
+@st.cache_data(ttl=600)  # Cache for 10 minutes
 def generate_response(messages):
     with client.messages.stream(max_tokens=1024, system=SYSTEM_PROMPT, messages=messages, model=AI_MODEL) as stream:
         return "".join([str(text) if text is not None else "" for text in stream.text_stream])
 
-# Function to Transcribe audio using Google Speech-to-Text API and format the results.
+# Function to Transcribe & cache audio using Google Speech-to-Text API and format the results.
+@st.cache_data(ttl=600)  # Cache for 10 minutes
 def transcribe_audio(audio_bytes: bytes) -> str:
     audio = speech.RecognitionAudio(content=audio_bytes)
     config = speech.RecognitionConfig(
