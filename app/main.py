@@ -6,6 +6,12 @@ from elevenlabs import play
 from elevenlabs.client import ElevenLabs
 import re
 
+# Path to the logo image
+logo_path = r"image\logo.png"
+
+# Display logo 
+st.logo(logo_path, size="large")
+
 # Set up the Streamlit page title and caption
 st.title("EQUITABLE")
 st.caption("Empowering women to claim an equal seat at the table by mirroring gendered dynamics in the real world.")
