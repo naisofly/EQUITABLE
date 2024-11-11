@@ -70,9 +70,9 @@ def generate_and_play_audio(text):
 if "messages" not in st.session_state:
     st.session_state.messages = []
     
-    initial_prompt = """I'm a woman and I need to roleplay a benefits negotiation scenario.
-        My goal is to approve my leave request.
-        My manager is neutral/professional. Put all manager responses in quotes.
+    initial_prompt = """I'm a woman and I need to roleplay a scenario where someone is talking over me in meetings and not receptive to different ideas
+        My goal is to be able to heard in full without interruption
+        My colleague is rigid and inflexible.
         After the roleplay scenario, I want a Feedback Summary with highlights with actionable next steps after the conversation using a 10 point scale for the below metrics:
         * Effectiveness (Did you meet your goal?)
         * Preparedness (Have you done your research?)
@@ -98,7 +98,7 @@ user_message_placeholder = st.empty()
 ai_response_placeholder = st.empty()
 
 # Always display the audio input widget
-audio_input = st.experimental_audio_input("Say something")
+audio_input = st.experimental_audio_input("Please click on the mic icon to respond")
 
 # Main Loop
 if audio_input is not None:

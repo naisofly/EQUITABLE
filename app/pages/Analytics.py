@@ -48,7 +48,7 @@ feedback = {
 
 # Function to display progress bars and scores for each metric
 def display_feedback(feedback):
-    st.title("Feedback Details")
+    st.title("Feedback Analysis")
     for metric, data in feedback.items():
         score = data["score"]
 
