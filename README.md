@@ -4,6 +4,10 @@
 
 EQUITABLE empowers women to claim an equal seat at the table by simulating real-world negotiation scenarios and providing personalized feedback.
 
+## Architecture Diagram
+
+![image](https://github.com/user-attachments/assets/eac6b3a7-1201-4cf6-bb63-3c4116e499dd)
+
 ## Impact & Relevance
 
 - Addresses the significant need for women's empowerment in negotiation and leadership roles.
@@ -24,6 +28,9 @@ EQUITABLE empowers women to claim an equal seat at the table by simulating real-
 - Integrates ElevenLabs Text-to-Speech to provide audio playback of manager responses.
 - Adapts to user's skill level for continuous improvement.
 
+## Setup Guide
+
+1. Clone the repository:
 ## Setup Guide
 
 1. Clone the repository:
