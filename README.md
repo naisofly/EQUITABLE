@@ -1,8 +1,8 @@
-# 👩‍💼EQUITABLE: AI-Powered Negotiation Training for Women
+# 👩‍💼EQUITABLE: Claim an Equal Seat at the Table
 
-![EQUITABLE Screenshot](https://github.com/user-attachments/assets/f0fa11a2-6acc-487f-8258-26bfba9b4006)
+EQUITABLE empowers women to claim an equal seat at the leadership table by simulating real-world negotiation scenarios and providing personalized feedback.
 
-EQUITABLE empowers women to claim an equal seat at the table by simulating real-world negotiation scenarios and providing personalized feedback.
+![image](https://github.com/user-attachments/assets/8ed52d1a-cb5f-410f-aec3-76a684d53be7)
 
 ## Architecture Diagram
 
