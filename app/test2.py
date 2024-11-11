@@ -37,7 +37,6 @@ goal = st.text_input("What is your goal?")
 
 # Add the "Let's Roleplay" button
 start_roleplay = st.button("Let's Roleplay")
-st.success("Congrats!")
 
 # Function to generate AI response
 def generate_response(messages, include_feedback=False):
@@ -53,7 +52,7 @@ def generate_response(messages, include_feedback=False):
 if start_roleplay:
     # Initialize the chat history if not done already
     if not st.session_state.messages:
-        initial_prompt = f"""I'm a woman and I need to roleplay a professional workplace scenario.
+        initial_prompt = f"""I'm a woman and I need to roleplay a benefits negotiation scenario.
 
         My manager is {manager_personality.lower()}.
         My scenario: {benefit_scenario.lower()}
