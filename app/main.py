@@ -14,7 +14,7 @@ st.logo(logo_path, size="large")
 
 # Set up the Streamlit page title and caption
 st.title("EQUITABLE")
-st.caption("Empowering women to claim an equal seat at the table by mirroring gendered dynamics in the real world.")
+st.subheader("Goal: Secure a Raise")
 
 # Define constants
 AI_MODEL = "claude-3-5-sonnet-20241022"
@@ -76,9 +76,9 @@ def generate_and_play_audio(text):
 if "messages" not in st.session_state:
     st.session_state.messages = []
     
-    initial_prompt = """I'm a woman and I need to roleplay a scenario where someone is talking over me in meetings and not receptive to different ideas
-        My goal is to be able to heard in full without interruption
-        My colleague is rigid and inflexible.
+    initial_prompt = """I'm a woman named Sarah and I need to roleplay a benefits negotiation scenario.
+        My goal is to secure a raise.
+        My Manager is rigid and has a traditional mindset. His dialogue is concise and approachable.
         After the roleplay scenario, I want a Feedback Summary with highlights with actionable next steps after the conversation using a 10 point scale for the below metrics:
         * Effectiveness (Did you meet your goal?)
         * Preparedness (Have you done your research?)

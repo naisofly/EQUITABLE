@@ -1,3 +1,4 @@
+# Previously test2.py; To be edited  to retreive chat history from Google Firestore
 import anthropic
 import streamlit as st
 import time
@@ -11,7 +12,7 @@ st.logo(logo_path, size="large")
 
 # Set up the Streamlit page title and caption
 st.title("EQUITABLE")
-st.caption("Empowering women to claim an equal seat at the table by mirroring gendered dynamics in the real world.")
+st.caption("Goal: Secure a raise")
 
 # Define constants
 AI_MODEL = "claude-3-5-sonnet-20241022"
@@ -52,7 +53,7 @@ def generate_response(messages, include_feedback=False):
 if start_roleplay:
     # Initialize the chat history if not done already
     if not st.session_state.messages:
-        initial_prompt = f"""I'm a woman and I need to roleplay a benefits negotiation scenario.
+        initial_prompt = f"""I'm a woman named Sarah and I need to roleplay a benefits negotiation scenario.
 
         My manager is {manager_personality.lower()}.
         My scenario: {benefit_scenario.lower()}

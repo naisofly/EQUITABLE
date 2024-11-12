@@ -81,7 +81,7 @@ def generate_summary(feedback):
     if average_score >= 8:
         summary.append("Overall, you performed excellently, showcasing great preparation and effectiveness.")
     elif 6 <= average_score < 8:
-        summary.append("Overall, you did well, but there is room for improvement, especially in areas like communication clarity and confidence.")
+        summary.append("Overall, you did well, but there is room for improvement, especially in areas like assertive communication and confidence.")
     else:
         summary.append("Overall, you need to focus on enhancing your preparation and assertiveness for better outcomes.")
     
