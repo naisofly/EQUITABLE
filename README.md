@@ -1,8 +1,12 @@
-# 👩‍💼EQUITABLE: AI-Powered Negotiation Training for Women
+# 👩‍💼EQUITABLE: Claim an Equal Seat at the Table
 
-![EQUITABLE Screenshot](https://github.com/user-attachments/assets/f0fa11a2-6acc-487f-8258-26bfba9b4006)
+EQUITABLE empowers women to claim an equal seat at the leadership table by simulating real-world negotiation scenarios and providing personalized feedback.
 
-EQUITABLE empowers women to claim an equal seat at the table by simulating real-world negotiation scenarios and providing personalized feedback.
+![image](https://github.com/user-attachments/assets/8ed52d1a-cb5f-410f-aec3-76a684d53be7)
+
+## Architecture Diagram
+
+![image](https://github.com/user-attachments/assets/eac6b3a7-1201-4cf6-bb63-3c4116e499dd)
 
 ## Impact & Relevance
 
@@ -24,6 +28,9 @@ EQUITABLE empowers women to claim an equal seat at the table by simulating real-
 - Integrates ElevenLabs Text-to-Speech to provide audio playback of manager responses.
 - Adapts to user's skill level for continuous improvement.
 
+## Setup Guide
+
+1. Clone the repository:
 ## Setup Guide
 
 1. Clone the repository:
