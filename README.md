@@ -2,11 +2,14 @@
 
 EQUITABLE empowers women to claim an equal seat at the leadership table by simulating real-world negotiation scenarios and providing personalized feedback.
 
-![image](https://github.com/user-attachments/assets/8ed52d1a-cb5f-410f-aec3-76a684d53be7)
+<div style="display: flex; flex-wrap: wrap; justify-content: space-around;">
+    <img src="https://github.com/user-attachments/assets/786446df-c22a-437b-8468-72430b581412" alt="Home" width="70%">
+    <img src="https://github.com/user-attachments/assets/a37036dd-33b5-41af-a475-1e9b8c5f0020" alt="Practice" width="25%">
+</div>
 
 ## Architecture Diagram
 
-![image](https://github.com/user-attachments/assets/eac6b3a7-1201-4cf6-bb63-3c4116e499dd)
+<img src="https://github.com/user-attachments/assets/eac6b3a7-1201-4cf6-bb63-3c4116e499dd" alt="Architecture Diagram" width="50%">
 
 ## Impact & Relevance
 
