@@ -1,4 +1,4 @@
-# 👩‍💼EQUITABLE: Claim an Equal Seat at the Table
+# 👩‍💼EQUITABLE: Claim Your Equal Seat at the Table
 
 EQUITABLE empowers women to claim an equal seat at the leadership table by simulating real-world negotiation scenarios and providing personalized feedback.
 
