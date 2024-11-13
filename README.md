@@ -31,9 +31,6 @@ EQUITABLE empowers women to claim an equal seat at the leadership table by simul
 ## Setup Guide
 
 1. Clone the repository:
-## Setup Guide
-
-1. Clone the repository:
 ```
 git clone https://github.com/naisofly/EQUITABLE.git
 cd EQUITABLE
@@ -53,4 +50,4 @@ streamlit run app/main.py
 
 [TODO: Link to demo video showcasing the app's functionality]
 
-By addressing a critical need in women's empowerment, leveraging innovative AI technology, and providing a user-friendly experience, EQUITABLE aims to make a significant impact in closing the gender gap in negotiation and leadership roles.
+EQUITABLE, directly addresses the root causes of gender inequality in the workplace by empowering women with critical skills essential for leadership and career advancement. By providing a safe, AI-powered platform for practising negotiation, assertive communication, and handling workplace challenges, with executive presence, we're actively closing the confidence gap that has long held women back.
