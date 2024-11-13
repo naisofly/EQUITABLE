@@ -51,6 +51,6 @@ streamlit run app/main.py
 
 ## Demo Video
 
-[TODO: Link to demo video showcasing the app's functionality]
+[![EQUITABLE Demo Video](https://img.youtube.com/vi/_-vMS-7kYgA/0.jpg)](https://youtu.be/_-vMS-7kYgA)
 
 EQUITABLE, directly addresses the root causes of gender inequality in the workplace by empowering women with critical skills essential for leadership and career advancement. By providing a safe, AI-powered platform for practising negotiation, assertive communication, and handling workplace challenges, with executive presence, we're actively closing the confidence gap that has long held women back.
