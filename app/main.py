@@ -18,8 +18,9 @@ st.subheader("Goal: Secure a Raise")
 
 # Define constants
 AI_MODEL = "claude-3-5-sonnet-20241022"
-ANTHROPIC_API_KEY = "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"
-ELEVENLABS_API_KEY = "sk_7475c8a88842abfa6ff5ae672b13517ad1a93bdb53199bd4"
+# Remember to add the API keys from the "Testing instructions for application" section of the submission to test the app!
+ANTHROPIC_API_KEY = "ADD_ANTHROPIC_API_KEY_HERE"
+ELEVENLABS_API_KEY = "ADD_ELEVENLABS_API_KEY_HERE"
 SYSTEM_PROMPT = """Our AI-powered negotiation training platform Promotes economic empowerment & leadership for women and girls, 
 one of the gender equity challenges outlined in UN SDG 5, by simulating real-world negotiation scenarios, considering all the 
 unconscious biases, microaggressions, gendered dynamics women face, providing a safe and interactive environment for women to 
